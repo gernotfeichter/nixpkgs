@@ -240,6 +240,8 @@ with pkgs;
 
   alire = callPackage ../development/tools/build-managers/alire { };
 
+  alp = callPackage ../os-specific/linux/alp { };
+
   althttpd = callPackage ../servers/althttpd { };
 
   amqpcat = callPackage ../development/tools/amqpcat { };

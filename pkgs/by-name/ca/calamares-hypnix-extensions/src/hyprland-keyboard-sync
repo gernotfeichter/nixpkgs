@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# This script listens to Calamares changing the keyboard layout
+# We utilize Calamares' kwin module which rewrites ~/.config/kxkbrc.
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+KXKBRC="$CONFIG_DIR/kxkbrc"
+
+# Calamares only writes to kxkbrc if it already exists, so we seed it.
+mkdir -p "$CONFIG_DIR"
+touch "$KXKBRC"
+if ! grep -q "LayoutList=" "$KXKBRC"; then
+    echo "LayoutList=us" >> "$KXKBRC"
+    echo "VariantList=" >> "$KXKBRC"
+    echo "Model=pc105" >> "$KXKBRC"
+fi
+
+# Watch for changes made by Calamares
+inotifywait -m -e close_write --format "%w%f" "$KXKBRC" | while read -r line; do
+    echo "Detected change in $KXKBRC"
+    LAYOUT=$(grep "^LayoutList=" "$KXKBRC" | cut -d'=' -f2 | cut -d',' -f1)
+    VARIANT=$(grep "^VariantList=" "$KXKBRC" | cut -d'=' -f2 | cut -d',' -f1)
+    
+    if [ -n "$LAYOUT" ]; then
+        hyprctl keyword input:kb_layout "$LAYOUT"
+        if [ -n "$VARIANT" ]; then
+            hyprctl keyword input:kb_variant "$VARIANT"
+        else
+            hyprctl keyword input:kb_variant ""
+        fi
+    fi
+done

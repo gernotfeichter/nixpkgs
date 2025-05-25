@@ -6,12 +6,12 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "calamares-hypnix-extensions";
-  version = "0.0.12";
+  version = "0.0.20";
 
   src = fetchFromGitHub {
     owner = "gernotfeichter";
     repo = "hypnix";
-    rev = "22d5278e4350efeb4c53ac738b6321e1c9dabf6e";
+    rev = "979141a97d343184977dffce114a3de58e27ca51";
     hash = "sha256-4BVGD9O1VvtV5P3PPV8feTY/P5yhW8YzQfi2RHwSK4o=";
   };
 

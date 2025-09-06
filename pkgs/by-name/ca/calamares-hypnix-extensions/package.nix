@@ -11,8 +11,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "gernotfeichter";
     repo = "hypnix";
-    rev = "104e16b72f71618560dad8d0df61ae4fa3319390";
-    hash = "sha256-mOCD8smBbY7PS6pBGd3Mc47qXzqISdvIOTfml5f19Ic=";
+    rev = "bc3458addaacb033221206e3bbb5eecdbca2d179";
+    hash = "sha256-0qZWz7Elk6HJGyrObYaLqF1gpFSEMMqEl737LnLw5Kw=";
   };
 
   installPhase = ''

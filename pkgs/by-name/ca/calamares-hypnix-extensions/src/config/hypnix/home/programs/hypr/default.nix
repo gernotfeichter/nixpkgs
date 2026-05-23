@@ -37,7 +37,7 @@
     # Input config
     input {
         kb_layout = ${osConfig.services.xserver.xkb.layout}
-        # kb_variant = ${config.services.xserver.xkb.variant} # this seems to be broken, at least for my current setup (german variants cannot be found), but for some reason it works currectly without specifying a variant, contrary to the console config
+        # kb_variant = ${osConfig.services.xserver.xkb.variant} # this seems to be broken, at least for my current setup (german variants cannot be found), but for some reason it works currectly without specifying a variant, contrary to the console config
         touchpad {
             natural_scroll = false
         }

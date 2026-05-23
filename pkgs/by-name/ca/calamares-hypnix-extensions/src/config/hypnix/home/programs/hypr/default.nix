@@ -1,4 +1,4 @@
-{ config, lib, pkgs, isLiveCD, ... }:
+{ config, lib, pkgs, osConfig, isLiveCD, ... }:
 
 {
   home.packages = with pkgs; [
@@ -36,19 +36,11 @@
 
     # Input config
     input {
-        kb_layout = "${config.services.xserver.xkb.layout or "us"}";
-        kb_variant = "${config.services.xserver.xkb.variant or ""}";
-        kb_model =
-        kb_options =
-        kb_rules =
-
-        follow_mouse = 1
-
+        kb_layout = ${osConfig.services.xserver.xkb.layout}
+        # kb_variant = ${config.services.xserver.xkb.variant} # this seems to be broken, at least for my current setup (german variants cannot be found), but for some reason it works currectly without specifying a variant, contrary to the console config
         touchpad {
             natural_scroll = false
         }
-
-        sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
     }
 
     # hyprgrass touchscreen

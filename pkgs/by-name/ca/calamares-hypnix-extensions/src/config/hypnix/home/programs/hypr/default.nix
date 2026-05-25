@@ -217,6 +217,7 @@
     bind = $mainMod_CTRL_L, plus, exec, killall -SIGUSR1 -r waybar
         '' + (lib.optionalString isLiveCD ''
 exec-once = sudo -E calamares
+exec-once = hyprland-keyboard-sync
 '');
   };
 

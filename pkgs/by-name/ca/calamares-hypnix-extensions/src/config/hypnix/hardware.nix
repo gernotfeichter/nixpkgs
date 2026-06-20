@@ -22,4 +22,8 @@
   services.ntp.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  # Configure console keymap
+  # console.useXkbConfig is disabled to prevent conflicts with explicitly provided console.keyMap from Calamares
+  # console.useXkbConfig = true;
 }

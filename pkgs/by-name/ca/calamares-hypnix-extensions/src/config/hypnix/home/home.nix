@@ -1,4 +1,4 @@
-{ hyprland, pkgs, ...}: {
+{ hyprland, pkgs, osConfig, ...}: {
 
   imports = [
     ./programs
@@ -71,7 +71,7 @@
 
   programs.home-manager.enable = true;
 
-  home.stateVersion = "23.11";
+  home.stateVersion = osConfig.system.stateVersion;
 
   nixpkgs.config.allowUnfree = true;
 }

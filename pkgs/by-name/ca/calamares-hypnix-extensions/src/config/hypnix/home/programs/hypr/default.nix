@@ -9,6 +9,10 @@
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
+    configType = "hyprlang";
+    #plugins = [
+    #  pkgs.hyprlandPlugins.hyprgrass
+    #];
     #nvidiaPatches = true;
     extraConfig = ''
     # Docu
@@ -32,12 +36,12 @@
     source = ~/.config/hypr/colors
     exec-once = pkill waybar & sleep 0.5 && waybar
     exec-once = ${pkgs.wlsunset}/bin/wlsunset -l 47.0 -L 15.4
-    exec-once = hyprctl plugin load /run/current-system/sw/lib/libhyprgrass.so
+    #exec-once = hyprctl plugin load $#{pkgs.hyprlandPlugins.hyprgrass}/lib/libhyprgrass.so
 
     # Input config
     input {
-        kb_layout = ${osConfig.services.xserver.xkb.layout}
-        # kb_variant = ${osConfig.services.xserver.xkb.variant} # this seems to be broken, at least for my current setup (german variants cannot be found), but for some reason it works currectly without specifying a variant, contrary to the console config
+        kb_layout = ${let l = osConfig.services.xserver.xkb.layout; in if l == "" || l == "custom" then "us" else l}
+        ${lib.optionalString (osConfig.services.xserver.xkb.variant != "") "kb_variant = ${osConfig.services.xserver.xkb.variant}"}
         touchpad {
             natural_scroll = false
         }
@@ -71,7 +75,10 @@
         col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
         col.inactive_border = rgba(595959aa)
 
-        layout = dwindle
+    }
+
+    misc {
+        focus_on_activate = true
     }
 
     decoration {
@@ -91,11 +98,6 @@
         animation = workspaces, 1, 3.5, ease
     }
 
-    dwindle {
-        pseudotile = yes
-        preserve_split = yes
-    }
-
     #master {
     #    new_is_master = yes
     #}
@@ -103,12 +105,8 @@
 
 
     # window rules
-    windowrulev2 = opacity 0.9 0.9,class:^(kitty)$
-    windowrulev2 = float,class:^(pavucontrol)$
-    windowrulev2 = float,class:^(blueman-manager)$
-    windowrulev2 = size 934 525,class:^(mpv)$
-    windowrulev2 = float,class:^(mpv)$
-    windowrulev2 = center,class:^(mpv)$
+    windowrule = opacity 0.9, match:class ^(kitty)$
+
 
     # keybindings
     $mainMod = SUPER
@@ -124,10 +122,6 @@
     bind = $mainMod, M, exit,
     bind = $mainMod, F, togglefloating,
     bindr= $mainMod, SUPER_L, exec, rofi -show drun || pkill rofi
-    bind = $mainMod, P, pseudo, # dwindle
-    bind = $mainMod, P, pseudo, # dwindle
-    bind = $mainMod, P, pseudo, # dwindle
-    bind = $mainMod, J, togglesplit, # dwindle
 
     # Switch Keyboard Layouts
     bind = $mainMod, SPACE, exec, hyprctl switchxkblayout teclado-gamer-husky-blizzard next

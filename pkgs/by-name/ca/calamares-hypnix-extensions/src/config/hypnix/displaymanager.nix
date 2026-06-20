@@ -6,9 +6,9 @@
       user = "${config.hypnix.standardUser}";
     };
     defaultSession = "hyprland";
-    sddm = {
+    dms-greeter = {
       enable = true;
-      wayland.enable = true;
+      compositor.name = "hyprland";
     };
   };
 }

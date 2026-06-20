@@ -43,6 +43,18 @@ in
       default = true;
       description = "Enable alp for sddm (display manager).";
     };
+
+    enableDmsGreeter = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable alp for dms-greeter.";
+    };
+
+    enableGreetd = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable alp for greetd.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -84,6 +96,8 @@ EOF
       sudo.text = lib.mkIf cfg.enableSudo (lib.mkDefault (lib.mkBefore alpAuthLine));
       login.text = lib.mkIf cfg.enableLogin (lib.mkDefault (lib.mkBefore alpAuthLine));
       sddm.text = lib.mkIf cfg.enableSddm (lib.mkBefore alpAuthLine);
+      "dms-greeter".text = lib.mkIf cfg.enableDmsGreeter (lib.mkDefault (lib.mkBefore alpAuthLine));
+      greetd.text = lib.mkIf cfg.enableGreetd (lib.mkDefault (lib.mkBefore alpAuthLine));
     };
 
     environment.systemPackages = [ pkgs.alp ];
